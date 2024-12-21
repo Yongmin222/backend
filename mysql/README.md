@@ -5,6 +5,14 @@
             - 단점, 업데이트 이슈, PC가 교체되면 다시 설치
             - 인터넷 연결 X 사용가능
             - 상대적으로 빠른 구동!!
+        - mysql은 최초로 무료 > oracle 회사에 인수
+            - mysql 개발자들이 나와서 만든 DB -> mariadb
+            - aws에서 오로라DB -> mysql 엔터프라이즈급 디바 제품 존재
+            - 동일한 SQL을 사용
+                - SQL = 표준 SQL + 벤더별SQL
+            - 다운르도 주소
+                - https://downloads.mysql.com/archives/installer/
+
     - (*)Docker 기반 컨테이너 설치
         - 컨테이너 베이스로 설치
         - OS에 영향 X, 삭제, 설치 등 원활
@@ -18,6 +26,8 @@
         - AWS(아마존 클라우드) 기반 RDS 서비스 사용
             - 비용 주의!!
         - AWS 기반 고사양 EX2 직접 설치
+    - MySQL Workbench
+        - https://dev.mysql.com/downloads/workbench/    
 
 - 학습 범위
     - (*)SQL
