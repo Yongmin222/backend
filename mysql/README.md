@@ -48,9 +48,31 @@
             - 비용 주의!!
         - AWS 기반 고사양 EX2 직접 설치
 
-    - MySQL Workbench
-        - https://dev.mysql.com/downloads/workbench/    
+        - MySQL Workbench
+            - https://dev.mysql.com/downloads/workbench/  
 
+        - (*)하이디SQL
+            - https://www.heidisql.com/download.php
+            - 연결 
+                - 실행 > 세션관리자 > 신규
+                - 호스트 : 127.0.0.1
+                - 사용자 : root
+                - 비밀번호 : 1234
+                - 데이터베이스 : 삼각형 버튼 눌러서 목록이 보이면 접속 성공
+                    - 선택 없이 확인 버튼 클릭 > 진입
+            - 더미 데이터 다운
+                - 자료실(구글)
+                    - ~/backend/data/sql_test_db.sql
+            - 접속후 화면 
+                - File > SQL 파일 실행 > sql_test_db.sql 선택
+                - 인코딩 팝업(확인 클릭)
+                - F5 : 새로고침 실행
+            - 차후 세션관리자에서 데이터베이스 항목 t1으로 변경
+        
+        - (*)vscode, 인텔리J등 => extention or 기본메뉴
+            - mysql 검색후  Weijan chen 제품(2번째 ) 설치
+        
+        
 - 학습 범위
     - (*)SQL
     - 상황보고
@@ -76,3 +98,58 @@
             - 조회!!, 질의 => 결과셋, 가장많은 분량
             - select
         - 나머지 언어, 진행하면서 정의
+
+# 접속
+- 도커 클라이언트 기준
+    - 컨테이너 > mysql 클릭 > Execs 클릭
+    ```
+        mysql -u root -p
+        password > 1234 <= 않보임
+    ```
+
+# DQL
+- 개요
+    - 데이터베이스라는 저장소(데이터웨어하우스,...)에서 원하는 데이터를 가져오는 쿼리문
+    - 데이터 질의어
+    - SQL => 대소문자 구분 x
+        - Select or SELECT or select, ...
+
+- 데이터베이스 조회
+    - 존재하는 모든 데이터베이스 확인
+    ```
+        show databases;
+    ```
+    - 내가 접근한 데이터베이스 존재여부 확인
+        - 물리적으로 존재하는가?
+        - 내가 로그인한 계정에서 접근 가능한가?
+
+- 특정 데이터베이스 사용 지정
+    ```
+        use mysql;
+    ```
+
+- 지정한 데이터베이스에서 테이블 목록 확인
+    ```
+        -- 모든 테이블 목록 출력
+        show tables;
+    ```
+
+- 테이블의 상세 정보 출력
+    ```
+        - 테이블의 구조(컬럼, 타입, ....) 확인 가능함
+        desc user;
+        describe user;
+    ```
+
+데이터 조회
+    - 가장 많이 사용하는 구문
+    - [ .. ] => 생략가능!!
+    ```
+        SELECT select_expression(조회 결과로 나오는 내용:컬럼,..)
+            [FROM table_reference:테이블명]  <= 출처
+            [WHERE condition:조건]      <= 데이터 조건, 1차 조건
+            [GROUP BY {col_name|expression|posion}] <= 집계/통계
+            [HAVING condition:조건]     <= 2차조건
+            [ORDER BY 정렬(오름|내림) ]  <= 정렬대상을 여러개 나열가능 (a컬럼 오름, b컬럼 내림)
+            [LIMIT [시작], 끝] <= 제한, 게시판(페이징처리)
+    ```
