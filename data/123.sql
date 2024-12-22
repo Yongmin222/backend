@@ -43,4 +43,86 @@ WHERE city.Population >= 5000000;
 -- 도시의 모든 데이터 조회
 SELECT *
 FROM city
-WHERE city.population >= 5000000 AND city.population <= 6000000;
+WHERE  city.Population >= 5000000 
+AND city.Population <= 6000000;
+
+-- 인구수가 5598953이 아닌(!=, <>) 도시의 모든 개수를 구하시오
+-- 개수는 count(*) 함수 사용, 별칭 부여 cnt
+SELECT
+FROM city
+WHERE population != 5598953;
+SELECT COUNT(*) AS cnt
+
+FROM city
+WHERE Population <> 5598953;
+-- 전체는 4,079개, 조건부여 4,078개     
+
+-- city 테이블에서
+-- 국가코드(CountryCode)가 KOR 혹은(OR) USA인 데이터를
+-- 모두 가져오시오
+SELECT *
+FROM city
+WHERE city.CountryCode='KOR' OR CountryCode='USA';
+
+-- 한국의 도시들중 AND 인구수가 백만이상인 도시 데이터만
+-- 모두 조회하시오
+SELECT *
+FROM city
+WHERE city.CountryCode='KOR' AND city.Population>=1000000;
+-- 0.016초
+
+SELECT *
+FROM city
+WHERE city.Population>=1000000 AND city.CountryCode='KOR';
+-- 0.000초
+
+-- 조건식의 배치 순서에 따라 처리 속도가 다름!!
+
+-- city 테이블에서
+-- 모든데이터를 가져온다
+-- 단, 인구수가 5백만이상, 6백만 이하인 도시만 해당된다
+-- 5000000 <= 인구수 <= 6000000
+SELECT *
+FROM city
+WHERE city.Population BETWEEN 5000000 AND 6000000;
+
+
+-- 도시 이름이 서울, 부산, 인천인 경우 -> IN
+-- 모든 데이터 조회하여 출력하시오
+-- 컬러명 IN ('', '', '',...)
+-- 값 표기 => '값;
+SELECT *
+FROM city
+WHERE NAME IN('seoul','pusan','inchon');
+
+-- 한국(KOR), 미국(USA), 일본(JPN), 프랑스(FRA) 도시를대상
+-- 모든 데이터 총 수를 구하시오, 별칭은 cnt
+SELECT COUNT(*) AS cnt
+FROM city
+WHERE city.CountryCode IN ('KOR','USA','JPN','FRA');
+-- 632
+
+
+-- 한국(KOR), 미국(USA), 일본(JPN), 프랑스(FRA) 도시를대상
+-- 이중 인구수가 6백만 이상(>=)인 도시 => AND로 연결
+-- 도시명, 인구수만 출력하시오
+SELECT `NAME`, Population
+FROM city
+WHERE  city.CountryCode IN ('KOR','USA','JPN','FRA')
+   AND city.Population >= 6000000;
+-- 3
+
+
+-- 프랑스에 존재하는 모든 도시 정보를 출력하시오
+-- 조건- 국가 코드를 모른다!!
+-- paris라는 도시명은 알고 있다!!
+-- 해결 => paris를 이용하여 프랑스 국가코드를 획득 
+--      => 위의 결과를 이용하여 <-'프랑스' <-'모든 도시 정보 획득'
+-- (서브 쿼리->결과값 1개인가(where) n개 인가(from)?)
+  SELECT *
+  FROM city
+  WHERE city.CountryCode=( 	SELECT CountryCode
+	                           FROM city
+	                           WHERE `NAME`='paris'
+                                  );
+  -- 서브쿼리 결과 FRA -> 1개의 결과
