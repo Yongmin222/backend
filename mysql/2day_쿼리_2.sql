@@ -176,3 +176,7 @@ GROUP BY c.CountryCode, c.`Name` with  ROLLUP
 -- HAVING c.CountryCode='KOR';
 
 -- 실습 : 오후학습 정리시 sum_popu값을 내림차순 기준으로 정렬
+
+
+
+
