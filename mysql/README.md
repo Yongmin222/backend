@@ -29,10 +29,10 @@
             - image로부터 컨테이너 생성 
                 - mysql 이미지 -> 설치
                 - 컨테이너 가동 -> mysql 사용!!
-            ```
+
                 docker run -d -p 3306:3306 --name mysql --env MYSQL_USER=ai --env MYSQL_PASSWORD=1234 --env MYSQL_ROOT_PASSWORD=1234 mysql
-            ```       
-            ```
+
+
                 docker run  : 이미지를 다운, 컨테이너 생성,구동
                 -d          : 백그라운드로 가동
                 -p 3306:3306 : OS단에서 3306번으로 접근(포트)
@@ -41,7 +41,7 @@
                 --env MYSQL_PASSWORD=1234  : ai 유저의 비번
                 --env MYSQL_ROOT_PASSWORD=1234 : root 유저의 비번
                 mysql : 이미지 이름
-            ```                     
+
         
     - Cloud 기반 설치
         - AWS(아마존 클라우드) 기반 RDS 서비스 사용
@@ -102,10 +102,10 @@
 # 접속
 - 도커 클라이언트 기준
     - 컨테이너 > mysql 클릭 > Execs 클릭
-    ```
+        ```
         mysql -u root -p
         password > 1234 <= 않보임
-    ```
+        ```
 
 # DQL
 - 개요
@@ -116,35 +116,35 @@
 
 - 데이터베이스 조회
     - 존재하는 모든 데이터베이스 확인
-    ```
+        ```
         show databases;
-    ```
+        ```
     - 내가 접근한 데이터베이스 존재여부 확인
         - 물리적으로 존재하는가?
         - 내가 로그인한 계정에서 접근 가능한가?
 
 - 특정 데이터베이스 사용 지정
-    ```
+        ```
         use mysql;
-    ```
+        ```
 
 - 지정한 데이터베이스에서 테이블 목록 확인
-    ```
+        ```
         -- 모든 테이블 목록 출력
         show tables;
-    ```
+        ```
 
 - 테이블의 상세 정보 출력
-    ```
+        ```
         - 테이블의 구조(컬럼, 타입, ....) 확인 가능함
         desc user;
         describe user;
-    ```
+        ```
 
 데이터 조회
     - 가장 많이 사용하는 구문
     - [ .. ] => 생략가능!!
-    ```
+        ```
         SELECT select_expression(조회 결과로 나오는 내용:컬럼,..)
             [FROM table_reference:테이블명]  <= 출처
             [WHERE condition:조건]      <= 데이터 조건, 1차 조건
@@ -152,29 +152,114 @@
             [HAVING condition:조건]     <= 2차조건
             [ORDER BY 정렬(오름|내림) ]  <= 정렬대상을 여러개 나열가능 (a컬럼 오름, b컬럼 내림)
             [LIMIT [시작], 끝] <= 제한, 게시판(페이징처리)
-    ```
+        ```
 
 - SELECT ~ FROM
     - 특정 테이블로부터 데이터 획득!!
-    ```
-        -- city라는 테이블에서 => 출처
-        -- 모든 데이터를 => 모든(*) 컬럼
-        -- 가져(조회)오시오
-        -- 문장의 끝 => ; 반드시 붙임
-        -- 결과셋 : (4079, 5)
-        SELECT *
-        FROM city;
-        -- * : 사용 가급적 금지!!
-        -- 반드시 조건 사용!! -> 모두 가져오기 x
-    ```
+        ```
+            -- city라는 테이블에서 => 출처
+            -- 모든 데이터를 => 모든(*) 컬럼
+            -- 가져(조회)오시오
+            -- 문장의 끝 => ; 반드시 붙임
+            -- 결과셋 : (4079, 5)
+            SELECT *
+            FROM city;
+            -- * : 사용 가급적 금지!!
+            -- 반드시 조건 사용!! -> 모두 가져오기 x
+        ```
     
     - 특정 컬럼만 가져오기
-    ```
-        -- city 테이블에서 
-        -- name, Population 컬럼만 조회하여
-        -- 모든 데이터를 가져오시오
-        SELECT name, Population
-        FROM city;
-        -- select_expression 자리에는 컬럼을 순서대로
-        -- 나열하면 결과를 원하는대로 가져올수 있다
-    ```
+        ```
+            -- city 테이블에서 
+            -- name, Population 컬럼만 조회하여
+            -- 모든 데이터를 가져오시오
+            SELECT name, Population
+            FROM city;
+            -- select_expression 자리에는 컬럼을 순서대로
+            -- 나열하면 결과를 원하는대로 가져올수 있다
+        ```
+    - 컬럼명 별칭
+        ```
+            -- 컬럼의 이름이 너무 길거나, 특정되지 않는다!!
+            -- 별칭 -> 결과셋의 컬럼명을 변경
+            -- 원본 이름 as 별칭
+            -- 컬럼명을 변조 -> 원본 테이블의 컬럼명 노출 방지(긍정)
+            SELECT NAME AS nm, 
+                    Population AS popu
+            FROM city;
+        ```
+- SELECT ~ FROM ~ WHERE ~
+    - 특정 조건을 부여 -> 서브셋만드는 과정
+    - 조건이 없다면 -> 모든 데이터, (*)조건이 있다면 -> 해당 데이터
+    - 연산자
+        - 조건 연산자 : =, >, <, >=, <=, !=, <>
+        - 관계(논리) 연산자 : NOT, AND, OR
+        - 연산자 조합
+
+    - 조건 적용
+        ```
+            -- city 테이블에서
+            -- 이상,이하 (>=, <=), 초과,미만 (>, <)
+            -- 인구수가 5,000,000 이상(>=)이 되는 
+            -- 도시를 추출(조회)하시오 -> 모든 컬럼
+            -- 테이블명.컬럼명 자동완성됨 -> tool에서 제공
+            SELECT *
+            FROM city
+            WHERE city.Population >= 5000000;
+            -- (24r x 5c)
+
+            -- 위의 쿼리문 기반으로 조건 변경
+            -- 인구수가 5백만 이상이고(AND),  6백만 이하인 
+            -- 도시의 모든 데이터 조회
+            SELECT *
+            FROM city
+            WHERE  city.Population >= 5000000 
+                AND city.Population <= 6000000;
+
+            -- 인구수가 5598953이 아닌(!=, <>) 도시의 모든 개수를 구하시오
+            -- 개수는 count(*) 함수 사용, 별칭 부여 cnt
+            SELECT COUNT(*) AS cnt
+            FROM city
+            WHERE Population != 5598953;
+
+            SELECT COUNT(*) AS cnt
+            FROM city
+            WHERE Population <> 5598953;
+            -- 전체는 4,079개, 조건부여 4,078개            
+
+            -- city 테이블에서
+            -- 국가코드(CountryCode)가 KOR 혹은(OR) USA인 데이터를
+            -- 모두 가져오시오
+            SELECT *
+            FROM city
+            WHERE city.CountryCode='KOR' OR CountryCode='USA';
+
+            -- 한국의 도시들중 AND 인구수가 백만이상인 도시 데이터만
+            -- 모두 조회하시오
+            SELECT *
+            FROM city
+            WHERE city.CountryCode='KOR' AND city.Population>=1000000;
+            -- 0.016초
+
+            SELECT *
+            FROM city
+            WHERE city.Population>=1000000 AND city.CountryCode='KOR';
+            -- 0.000초
+
+            -- 조건식의 배치 순서에 따라 처리 속도가 다름!!
+        ```
+- SELECT ~ FROM ~ WHERE ~ BETWEEN
+    - 조건식에 BETWEEN를 사용
+    - 조건을 부여하는 컬럼의 데이터 타입이 수치형(or 연속형)일때 사용가능
+        - 값과 값사이가 무한대 : 통상 연속형의 특징을 가짐
+        - 컬럼명 BETWEEN a AND b
+            - a <= 컬럼값 <= b
+        ```
+            -- city 테이블에서
+            -- 모든데이터를 가져온다
+            -- 단, 인구수가 5백만이상, 6백만 이하인 도시만 해당된다
+            -- 5000000 <= 인구수 <= 6000000
+            SELECT *
+            FROM city
+            WHERE city.Population BETWEEN 5000000 AND 6000000;
+        ```
