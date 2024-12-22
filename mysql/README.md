@@ -777,3 +777,53 @@
         -- (4086, 20)
 
     ```
+
+- union, union all
+    - 합집합 담당
+    - 조건 : 컬럼의 이름/개수가 동일해야함!!
+    - 차이점
+        - union : 중복제거
+        - union all : 모든 데이터가 포함(중복 제거 x)
+    
+    ```
+        -- union, union all
+        -- A 집합
+        -- city 테이블 대상
+        -- 한국만 대상, 인구수 9000000 이상인 데이터에서
+        -- 도시명, 인구수 조회
+        SELECT c.`Name`, c.Population
+        FROM city AS c
+        WHERE c.CountryCode='KOR' AND c.Population>=9000000;
+        -- 1
+
+        -- B 집합
+        -- city 테이블 대상
+        -- 한국만 대상, 인구수 800000 이상인 데이터에서
+        -- 도시명, 인구수 조회
+        SELECT c.`Name`, c.Population
+        FROM city AS c
+        WHERE c.CountryCode='KOR' AND c.Population>=800000;
+        -- 8
+
+
+        -- A 집합 union b 집합
+        SELECT c.`Name`, c.Population
+        FROM city AS c
+        WHERE c.CountryCode='KOR' AND c.Population>=9000000
+        UNION
+        SELECT c.`Name`, c.Population
+        FROM city AS c
+        WHERE c.CountryCode='KOR' AND c.Population>=800000;
+        -- 8개 결과
+
+        -- A 집합 union all b 집합
+        -- 중복 제거 x
+        SELECT c.`Name`, c.Population
+        FROM city AS c
+        WHERE c.CountryCode='KOR' AND c.Population>=9000000
+        UNION all
+        SELECT c.`Name`, c.Population
+        FROM city AS c
+        WHERE c.CountryCode='KOR' AND c.Population>=800000;
+
+    ```
