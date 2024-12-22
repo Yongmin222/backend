@@ -125,4 +125,67 @@ WHERE  city.CountryCode IN ('KOR','USA','JPN','FRA')
 	                           FROM city
 	                           WHERE `NAME`='paris'
                                   );
-  -- 서브쿼리 결과 FRA -> 1개의 결과
+-- 서브쿼리 결과 FRA -> 1개의 결과
+
+
+-- 동일 요구사항, 단 District 컬럼값에 'New York'를 이용하여 구성
+-- 주 정보를 이용하여 국가코드 획득 -> 해당국가의 모든 도시 정보 획득
+SELECT *
+        FROM city
+        WHERE city.CountryCode=( 	SELECT CountryCode
+                                    FROM city
+                                    WHERE District='New York'
+                               );
+-- 오류발생, 1개의 일치된 값을 요구하는 조건문에 N개의 값을 대입
+-- 해결 : 서브쿼리 조정-> 결과가 1개만 나오게 처리 (의도는 아님)
+-- 다른 방식 : ANY, SOME을 응용하여 처리가능
+
+-- 서브쿼리를 FROM에 사용 -> n개의 결과셋을 대상으로 진행
+-- 통상 별칭 부여 -> 결과셋의 이름부여
+-- 컬럼을 나열할때 이름.컬럼명 표현하여 출처를 명확하게 명시
+-- 최종 컬럼명 별칭.컬럼명
+SELECT A.*
+FROM (SELECT CountryCode, `NAME` AS city_nm
+		FROM city
+		WHERE District='New York') AS A
+
+
+-- 뉴욕`주`인 데이터 대상으로 인구를 구한다
+-- 해당 인구보다 크기만 하면, 특정 대상이 되어, 
+-- 모든 도시 정보를 출력한다
+
+-- 모든 데이터들중에 뉴욕`주`에 해당되는 인구수보다 크면 조회된다
+SELECT *
+FROM city
+WHERE Population > ( SELECT Population
+                    FROM city
+                    WHERE District='New York'
+                       );
+
+-- ANY 적용
+SELECT *
+FROM city
+WHERE Population > ANY ( SELECT Population
+                         FROM city
+                         WHERE District='New York'
+                       );
+-- 3782
+-- 결론:뉴욕주의 가장 작인 인구수를 가진 도시보다 크기만 하면 모두 대상이됨
+
+-- IN 하고 같은 결과물
+SELECT *
+FROM city
+WHERE Population = ANY ( SELECT Population
+                  FROM city
+                  WHERE District='New York'
+                       );
+
+-- ALL
+-- 서브 쿼리의 결과 셋과 다 비교하여 모두 만족할때 대상이 됨
+-- 가장 큰값보다 크면 모두 해당됨!!
+SELECT *
+FROM city
+WHERE Population > ALL ( SELECT Population
+						FROM city
+						WHERE District='New York'
+					 );                       
