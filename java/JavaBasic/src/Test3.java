@@ -3,16 +3,38 @@
  *  - 조건문 : if ~ else if ~ else ~
  *      - 콘솔 입력 사용
  *  - 반복문 : for ~,  do ~ while, while ~ , continue, break
- *  - 게임 제작(간단하게)
+ *  *  - 게임 제작(간단하게) - 스킵
  *      - 콘솔 입력 사용
  */
 public class Test3 {
     public static void main(String[] args) {
         // 조건문 연습
         flowcontrol1();
-        // 반복문 연습
+        // 반복문 연습 : 지정된 횟수 연습
         flowcontrol2();
+        // 반복문-while 연습 : 무한루프(종료 시점 알 수 없다)
+        flowcontrol3();
+
     }
+
+    private static void flowcontrol3() {
+        int i = 1;
+        while (true){
+            System.out.println(i);
+            // i 업데이트 필요
+            i++;
+            if( i > 5) break;
+        }
+        // 출력값 : 1, 2, ....
+        // 1 ~ 무한대 반복
+        i = 1;
+        do{
+           if(i % 2 == 1) continue;
+           System.out.println(i);
+           i++;
+           if( i > 5 ) break;
+        }while (true);
+  }
 
     private static void flowcontrol2() {
         // for 문의 문법 => JS와 유사함
