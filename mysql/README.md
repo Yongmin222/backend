@@ -1257,3 +1257,15 @@
                     WHERE A.age_band LIKE '%이%'; -- 위치에 상관없이 "이"있기만 하면됨(검색)
                 ```
 
+        - 랭킹
+            - 랭킹 표현
+            - 각 함수의 결과물은 랭킹 이미지 참조
+            ```
+                -- 랭킹
+                -- 자동차 주문 날짜 <- 오름차순 정렬후
+                SELECT co.mem_no, co.order_date
+                    ,ROW_NUMBER() OVER (ORDER BY co.order_date ASC) AS RANK1
+                    ,RANK()       OVER (ORDER BY co.order_date ASC) AS RANK2
+                    ,DENSE_RANK() OVER (ORDER BY co.order_date ASC) AS RANK3
+                FROM car_order AS co;                
+            ```
