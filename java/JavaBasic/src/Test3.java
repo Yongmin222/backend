@@ -22,11 +22,14 @@ public class Test3 {
         }
         // 응용
         // 1 ~ 100까지 총합계 구하시오 => 기본 for문 사용
-        int sum = 0;
-        for (int j = 1; j <= 100; j++) {
-            sum += j;
+        int sum = 0; // 합계값을 담을 그릇(정수형)
+        for (int i = 1; i <= 100; i++) {
+            // 누적합
+            sum += i;
+            //sum = sum + i;
         }
-        System.out.println("누적합 :" + sum);
+        System.out.println("누적합 : " + sum);
+
         // 역순 출력
         // 값 업데이트 파트  => i++, i--, i+=2, ... 여러 표현 가능(요구사항에 맞게)
         for (int i = 3; i > 0; i--) {
@@ -39,6 +42,7 @@ public class Test3 {
         for (int i = 0; i < arr.length; i++) {
             System.out.println(arr[i]);
         }
+
         // 중첩 for문 => 구구단 => 5~7단, 3~6까지만 출력
         // 출력값 : 5 x 3 = 15, .... 7 x 6 = 42
         // 15, .... 42 <= 곱의 결과만 나오게 출력
@@ -57,10 +61,17 @@ public class Test3 {
          *******
          *********
          */
+
         // for-each 반복 처리
+        // for-each 반복 처리 => 배열, 컬렉션 계열 데이터를 대상
+        System.out.println();
+        int[] data = {10, 12, 15, 40, 50};
+        for(int i: data) {
+            // 인덱스에 상관없이 값을 뽑아서(순서대로) 출력
+            System.out.println(i);
+        }
+
     }
-
-
 
     private static void flowcontrol1() {
         // 1. 콘솔 입력
@@ -68,7 +79,9 @@ public class Test3 {
         //while(true)
         {
             System.out.println("Enter number: ");
+            // 2. 사용자 입력후 엔터 => 값이 반환
             int userInputValue = 10;// sc.nextInt(); // 입력 대기
+            // 3. 만약 100을 입렷했다면, 종료 혹은 반복문 탈출
             //if (userInputValue == 100) break;
             // 4. 조건식 사용, JS 조건문 동일, 조건이 2개? 3개?
             if (userInputValue > 10) {
