@@ -48,7 +48,7 @@ GRANT [권한] ON [db].[테이블] TO [유저아이디]@[호스트]
 GRANT ALL PRIVILEGES ON t1.* TO 'guest1'@'%';
 
 -- 12. 메모리 저장
-FLUSH PRIVILEGES;
+t1FLUSH PRIVILEGES;
 
 -- 13. 세션관리자 확인
 -- guest1 / 1234 => t1 확인됨
@@ -59,7 +59,5 @@ SHOW GRANTS FOR guest1;
 -- 15. 권한 삭제
 -- 루트 권한에서만 승인됨 (작업)
 REVOKE ALL PRIVILEGES ON t1.* FROM 'guest1'@'%';
-
-
 
 
