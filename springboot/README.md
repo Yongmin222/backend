@@ -215,5 +215,9 @@
             ```
         - application.properties 환경설정
             ```
-            
+
             ```
+
+    - 디비 접속
+        - 서버 가동 중이여야 함
+        - http://localhost:8080/h2-console
