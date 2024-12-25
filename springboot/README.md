@@ -131,40 +131,48 @@
             - ~/auth/join
             - ~/auth/signup
             - ~/auth/logout ...
-    - 데이터 전달(전송)
-        - client -> server 데이터 전달
-        - 전달 방법(method)
-            - (*)get, (*)post, put, .....
-        - 클라이언트 전송 방식 (프런트엔드)
-            - html
-                - form 전송 : get, post 사용
-                - a 태그 : 링크 전송, get
-            - js
-                - ajax 사용
-                    - axios 사용
-                    - fetch 사용
-        - 서버는 어떻게 데이터를 받는가(수신)?
-            - 결론 : 요청(request) 객체를 타고 전달됨
-            - 코드 표현
-                - 메소드 방식
-                    - @GetMapping()     : get 데이터 획득
-                        - 브라우저 => 주소창 => URL 입력=> 엔터 : get 방식요청                    
-                    - @PostMapping()    : post 데이터 획득
-                        - 보안 중요, 전달 데이터가 노출되면 x, 대량 데이터 전송(파일 업로드)
-                        - html form 혹은 ajax로 사용, 요청 테스트 도구(POSTMAN, Thunder Client...)
-                        - Thunder Client (요청 테스트용도)
-                            - vscode extension 설치
-                            - 번개 아이콘 클릭 > 진입 > new Request 클릭    
-                                - POST 선택
-                                - http://localhost:8080/auth/signin
-                                - SEND 버큰 클릭
-                                - 화면 하단 200 OK (요청 테스트 확인)                    
-                                - 데이터 세팅
-                                    - Body > Form
-                                        - uid,  값
-                                        - upw,  값 
-                                - SEND 버튼 클릭 => 요청
-                    - .... : ...
-                  - url path(타 플랫폼 동적 파라미터) 방식
-                    - 주소(URL)타고 전송
-                    - 여러 메소드 방식과 조합 가능함        
+            
+- 데이터 전달(전송)
+    - client -> server 데이터 전달
+    - 전달 방법(method)
+        - (*)get, (*)post, put, .....
+    - 클라이언트 전송 방식 (프런트엔드)
+        - html
+            - form 전송 : get, post 사용
+            - a 태그 : 링크 전송, get
+        - js
+            - ajax 사용
+                - axios 사용
+                - fetch 사용
+    - 서버는 어떻게 데이터를 받는가(수신)?
+        - 결론 : 요청(request) 객체를 타고 전달됨
+        - 코드 표현
+            - 메소드 방식
+                - @GetMapping()     : get 데이터 획득
+                    - 브라우저 => 주소창 => URL 입력=> 엔터 : get 방식요청
+                - @PostMapping()    : post 데이터 획득
+                    - 보안 중요, 전달 데이터가 노출되면 x, 대량 데이터 전송(파일 업로드)
+                    - html form 혹은 ajax로 사용, 요청 테스트 도구(POSTMAN, Thunder Client...)
+                    - Thunder Client (요청 테스트용도)
+                        - vscode extension 설치
+                        - 번개 아이콘 클릭 > 진입 > new Request 클릭    
+                            - POST 선택
+                            - http://localhost:8080/auth/signin
+                            - SEND 버큰 클릭
+                            - 화면 하단 200 OK (요청 테스트 확인)
+                            - 데이터 세팅
+                                - Body > Form
+                                    - uid,  값
+                                    - upw,  값 
+                            - SEND 버튼 클릭 => 요청
+                - .... : ...
+            - url path(타 플랫폼 동적 파라미터) 방식
+                - 주소(URL)타고 전송
+                - 여러 메소드 방식과 조합 가능함
+- 템플릿 엔진
+    - @Controller에서만 해당
+    - 타임리프 제품 사용
+        - thymeleaf.org
+        - modern server-side Java template engine
+        - 관련 문법은 필요시 등장시킴 
+    - html + 데이터 => 동적으로 html 재구성 => 응답용 html 완성시키는 템플릿 엔진의 한 종류
