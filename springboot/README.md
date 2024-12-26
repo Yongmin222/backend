@@ -302,5 +302,24 @@
         - (*)자바 표준 ORM 기술
         - 객체와 관계형 데이터베이스 간의 매핑 제공
             - JPA 사용은 데이터베이스를 자바에서 객체 지향으로 관리하겠다 의도!!, SQL 사용을 최대한 배제
+
     - database
         - RDB
+        
+- 구성 실습
+    - 1. 패키지 구성
+        - 방식 (대략 2가지로 존재)
+            - 비즈니스 로직별로 구성
+                - auth
+                    - *Controller.java
+                    - *Service.java
+                    - ...
+                - main
+            - (*)자바파일의 용도별로 구성
+                - controllers  
+                    - *Controller.java      
+                - services
+                    - *Service.java
+                - dto
+                - repositories
+                - entities
