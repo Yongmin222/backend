@@ -20,4 +20,8 @@ public class Review {
 
     private LocalDateTime createDate;
 
+    // 본글 : 리뷰 = 1 : N 관계
+    // 리뷰 : 본글  = N : 1 관계
+    @ManyToOne
+    private Post post;
 }
