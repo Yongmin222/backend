@@ -357,16 +357,38 @@
 
                 - 4-2-2. 서비스 구성
                         - controller <-> (*)service <-> dto <-> repository <-> entity <-> jpa <-> database
-                        
+
                 - 4-2-3. dto 구성
                         - controller <-> service <-> (*)dto <-> repository <-> entity <-> jpa <-> database
 
                 - 4-2-4. repository 구성
                         - controller <-> service <-> dto <-> (*)repository <-> entity <-> jpa <-> database
+
+                - 4-2-5. 타임리프 템플릿 엔진 적용
+                        - 화면에 게시물의 내용 출력                        
                 - ..        
     
     - 5. 타임리프 문법 기본 문법
         - 템플릿 제공 (편집 내용 확인)
+            - 개발 시작 (시나리오 가정)
+                - 기획 -> 기획서 작성, 스토리 보드, ERD 구성
+                - 개발팀 : 개발 -> 디자인 입히는 과정이 필요!! -> (*)템플릿 제공
+                    - ~/resources/static
+                        L dist
+                            L css
+                            L img
+                            L js
+                        L pluhins
+                            L * : js 라이브러리
+                    - ~/resources/templates
+                        L board
+                            L *.html : 글목록/쓰기/수정/삭제, 리뷰..
+                        L lib
+                            L *.html : 레이아웃 전용 (기본 템플릿)
+                - DBA : 모델링, 테이블등 작업
+                - 디자인 : 시안(a,b,c,d) -> html 코딩, css 작업등등
+                - js : 프런트 진행
+                - 
         - SSR 습득
     
     - 6. 게시판 기능 완성 -> CRUD 연습
