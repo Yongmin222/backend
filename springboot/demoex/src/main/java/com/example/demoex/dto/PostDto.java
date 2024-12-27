@@ -34,6 +34,12 @@ public class PostDto {
     private List<Review> reviews;
 
     public Post toEntity() {
-        return
+        return Post.builder()
+                .id(this.id)
+                .subject(this.subject)
+                .content(this.content)
+                .createDate(this.createDate)
+                .reviews(this.reviews)
+                .build();
     }
 }
