@@ -43,19 +43,19 @@ public class PostController {
         model.addAttribute("posts", posts); // 게시물 데이터 전달
         model.addAttribute("dummy", "hello"); // 더미
         // 3. 응답한다
-        return "test/post_list"; // resources/templates/test/post_list.html 읽어서 랜더링
+        return "board/post_list"; // resources/templates/test/post_list.html 읽어서 랜더링
     }
     @GetMapping("/create")
     public String create() {
-        return "create";
+        return "board/post_form";
     }
     @GetMapping("/detail/{id}")
     public String detail() {
-        return "detail";
+        return "board/post_detail";
     }
     @GetMapping("/modify/{id}")
     public String modify() {
-        return "modify";
+        return "board/post_form";
     }
     @GetMapping("/delete/{id}")
     public String delete() {
