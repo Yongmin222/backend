@@ -31,6 +31,7 @@ public class PostController {
         //  postService.xxxx() 바로 사용 가능(이미 객체는 만들어져 있다)
         // 서비스의 findAllPost() 메소드를 호출해서, 모든 게시물을 가져와서 DTO에 교환해서 받을것이다!!
         // DTO 생성
+        // 향후 페이징 기능 추가
         List<PostDto> posts = postService.getAllPost(); // 모든 post의 내용 가져오기
         // 디비에서 가져온 데이터 확인
         for (PostDto post : posts) {
