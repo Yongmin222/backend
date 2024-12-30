@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -46,20 +47,39 @@ public class PostController {
         // 3. 응답한다
         return "board/post_list"; // resources/templates/test/post_list.html 읽어서 랜더링
     }
+
     @GetMapping("/create")
-    public String create() {
+    public String create()
+    {
         return "board/post_form";
     }
+    /**
+     * id 번호에 따라 글을 조회(디비연동)하여, 상세보기 처리
+     * @return
+     */
     @GetMapping("/detail/{id}")
-    public String detail() {
+    public String detail(   Model model,
+                            @PathVariable("id") Integer id) {
+        // 1. 파라미터 추출(클->서 데이터 전송) => id값 추출, @PathVariable
+        System.out.println("상세보기 : " + id);
+        // 2. id를 이용하여 PostDto(Post와 교환된) 1개를 추출 -> 서비스 요청
+        PostDto post = this.postService.getOnePost( id ); // id : Post 데이터를 구분하는 PK
+        // 3. PostDto를 Model에 적용하여 타임리프에서 랜더링 요청
+        model.addAttribute("post", post);
+        // 4. 응답 html 완료(상세 보기 완성)
+
         return "board/post_detail";
     }
+
     @GetMapping("/modify/{id}")
     public String modify() {
+
         return "board/post_form";
     }
+
     @GetMapping("/delete/{id}")
     public String delete() {
+
         return "delete";
     }
 }
