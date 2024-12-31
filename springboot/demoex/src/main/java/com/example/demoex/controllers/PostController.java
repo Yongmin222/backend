@@ -1,6 +1,7 @@
 package com.example.demoex.controllers;
 
 import com.example.demoex.dto.PostDto;
+import com.example.demoex.form.PostForm;
 import com.example.demoex.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,8 +50,14 @@ public class PostController {
 
     // ~/post/create, Get방식
     @GetMapping("/create")
-    public String create()
-    {
+    public String create() {
+        return "board/post_form";
+    }
+
+    // ~/post/create2, Get방식
+    @GetMapping("/create")
+    public String create2(PostForm postForm) {
+        // PostForm을 매개변수로 전달받음으로써, html 랜더링시 세팅 가능하다!!
         return "board/post_form";
     }
 
@@ -76,15 +83,16 @@ public class PostController {
 
     /**
      * id 번호에 따라 글을 조회(디비연동)하여, 상세보기 처리
+     *
      * @return
      */
     @GetMapping("/detail/{id}")
-    public String detail(   Model model,
-                            @PathVariable("id") Integer id) {
+    public String detail(Model model,
+                         @PathVariable("id") Integer id) {
         // 1. 파라미터 추출(클->서 데이터 전송) => id값 추출, @PathVariable
         System.out.println("상세보기 : " + id);
         // 2. id를 이용하여 PostDto(Post와 교환된) 1개를 추출 -> 서비스 요청
-        PostDto post = this.postService.getOnePost( id ); // id : Post 데이터를 구분하는 PK
+        PostDto post = this.postService.getOnePost(id); // id : Post 데이터를 구분하는 PK
         // 3. PostDto를 Model에 적용하여 타임리프에서 랜더링 요청
         model.addAttribute("post", post);
         // 4. 응답 html 완료(상세 보기 완성)
