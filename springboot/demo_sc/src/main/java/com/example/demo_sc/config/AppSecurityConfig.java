@@ -32,6 +32,7 @@ public class AppSecurityConfig {
     //    - 시큐리티 5.x -> 6.x 변경되면서 바뀐 메소드
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        System.out.println("1회성 인증 관리자 등록 여부 체크");
         return http
                 // 1. 인증이 필요한 페이지와 아닌 페이지
                 .authorizeRequests()
