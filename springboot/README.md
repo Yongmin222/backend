@@ -521,6 +521,7 @@
     - 스프링 프레임워크의 하위 프레임워크
     - 용도 : 인증, 인가(권한), 보안 프레임워크, 필수 적용
     - 버전 : 6.x 사용
+
 - 특징
     - 인증
     - 인가
@@ -528,10 +529,24 @@
     - 세션관리
     - JWT, oAuth2 지원
     - CSRF 공격 방어
+
 - 목적
     - 로그인, 로그아웃
     - 회원가입, 회원수정 x
     - 페이지별 접근 여부등 정책 적용
         - 인증이 있어야만 접근가능한 페이지
         - 인증 없이 접근할수 있는 페이지
-        - 권한(인가)에 따라 메뉴가 상이하게 노출                                
+        - 권한(인가)에 따라 메뉴가 상이하게 노출
+
+- 세팅
+    - 외부 라이브러리 
+    ```
+        // 스프링 시큐리티 프레임웍
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+        
+        // 타임리프와 연동하는 스프링시큐리티
+        implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+        
+        // 단위 테스트 스프링시큐리티
+        testImplementation 'org.springframework.security:spring-security-test'
+    ```
