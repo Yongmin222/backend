@@ -1,6 +1,7 @@
 package com.example.demoex.controllers;
 
 import com.example.demoex.dto.PostDto;
+import com.example.demoex.dto.ReviewDto;
 import com.example.demoex.services.PostService;
 import com.example.demoex.services.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -48,9 +49,11 @@ public class ReviewController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         // 1. 리뷰 ID를 기반 -> 실제로 데이터가 존재하는지 조회
-        this.reviewService.getOneReview( id );
+        ReviewDto reviewDto = this.reviewService.getOneReview( id );
         // 2. 없을 경우 처리 -> 생략
         // 3. 테이블상에서 실제 삭제 -> 서비스.delete( reviewDto )
-        return "delete";
-    }
+        this.reviewService.delete( reviewDto );
+        // 4. 본글 상세보기 -> 특정 리뷰의 삭제 버튼 클릭 -> 삭제 요청/처리->본글 상세보기
+        return "redirect:/post/detail/" + reviewDto.getPost().getId(); // 본글 아이디    }
+}
 }
