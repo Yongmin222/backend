@@ -5,8 +5,10 @@ import com.example.demoex.dto.ReviewDto;
 import com.example.demoex.form.ReviewForm;
 import com.example.demoex.services.PostService;
 import com.example.demoex.services.ReviewService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/review")
@@ -49,6 +51,27 @@ public class ReviewController {
         ReviewDto reviewDto = this.reviewService.getOneReview( id );
         reviewForm.setContent( reviewDto.getContent() );
         return "board/review_form";
+    }
+
+    // 리뷰 수정 처리
+    @PostMapping("/modify/{id}")
+    public String modify(@Valid ReviewForm reviewForm,
+                         BindingResult bindingResult,
+                         @PathVariable Integer id) {
+        // 1. 유효성 검증 결과 에러가 존재하면 -> 오류 세팅하여 입력폼 화면 뛰우기
+        if (bindingResult.hasErrors()) {
+            return "board/review_form"; // 같은 url의 get방식의 리턴값
+        }
+        // 2. id에 해당되는 리뷰dto 획득
+        ReviewDto reviewDto = this.reviewService.getOneReview( id );
+        // 3. 새로입력한 내용을 리뷰dto 수정
+        //    reviewForm -> 새로 작성된 내용을 가지고 있음 -> dto 반영
+        reviewDto.setContent( reviewForm.getContent() );
+        // 4. 서비스에 수정 요청, 리뷰dto 전달
+        this.reviewService.modify( reviewDto );
+        // 5. 본글 상세 보기로 포워딩 -> 수정된 리뷰 확인 가능 (본글 상세보기에서 확인)
+        //    본글 상세보기 -> 댓글 수정 -> 수정폼 수정 -> 수정요청 -> 본글 상세보기
+        return "redirect:/post/detail/" + reviewDto.getPost().getId();
     }
 
     // 리뷰 삭제
