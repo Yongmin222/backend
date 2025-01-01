@@ -36,7 +36,7 @@ public class AppSecurityConfig {
                 // 1. 인증이 필요한 페이지와 아닌 페이지
                 .authorizeRequests()
                 // 아래 페이지는 인증 필요 x (로그인, 회원가입)
-                .requestMatchers("/login", "/signup").permitAll()//허가
+                .requestMatchers("/login", "/signup", "signup_process").permitAll()//허가
                 // 인증 필요!!
                 .anyRequest().authenticated()
                 .and()
