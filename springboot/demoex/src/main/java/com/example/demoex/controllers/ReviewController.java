@@ -2,6 +2,7 @@ package com.example.demoex.controllers;
 
 import com.example.demoex.dto.PostDto;
 import com.example.demoex.dto.ReviewDto;
+import com.example.demoex.form.ReviewForm;
 import com.example.demoex.services.PostService;
 import com.example.demoex.services.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -39,9 +40,14 @@ public class ReviewController {
         // 3. 원래 본글의 상세 보기 화면으로 포워딩
         return "redirect:/post/detail" + id;
     }
-    // 리뷰 수정
+    // 리뷰 수정, 검증폼을 활용, 화면 세팅(기존 내용 채워서) 구성
     @GetMapping("/modify/{id}")
-    public String modify() {
+    public String modify(ReviewForm reviewForm,
+                         @PathVariable Integer id) {
+        // 리뷰폼에 내용 세팅 -> 수정시 관련 내용 자동 세팅
+        // 리뷰 id -> 리뷰 획득 -> 리뷰폼 세팅
+        ReviewDto reviewDto = this.reviewService.getOneReview( id );
+        reviewForm.setContent( reviewDto.getContent() );
         return "board/review_form";
     }
 
@@ -54,6 +60,6 @@ public class ReviewController {
         // 3. 테이블상에서 실제 삭제 -> 서비스.delete( reviewDto )
         this.reviewService.delete( reviewDto );
         // 4. 본글 상세보기 -> 특정 리뷰의 삭제 버튼 클릭 -> 삭제 요청/처리->본글 상세보기
-        return "redirect:/post/detail/" + reviewDto.getPost().getId(); // 본글 아이디    }
-}
+        return "redirect:/post/detail/" + reviewDto.getPost().getId(); // 본글 아이디
+     }
 }
