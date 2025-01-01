@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 
 /**
  * Controller 처리
+ *  - @Slf4j : 롬복의 로그 처리 어노테이션
  */
 @Slf4j
 @Controller
